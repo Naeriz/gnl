@@ -6,13 +6,13 @@
 /*   By: moo <moo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:50:09 by moo               #+#    #+#             */
-/*   Updated: 2024/12/04 21:23:25 by moo              ###   ########.fr       */
+/*   Updated: 2024/12/04 21:39:53 by moo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, char c)
+char	*ft_strchr(char *s, char c)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ char	*ft_strchr(const char *s, char c)
 	return (&((char *)s)[i]);
 }
 
-char	*cpystr(char *s1)
+char	*ft_cpystr(char *s1)
 {
 	int		i;
 	char	*s2;
@@ -57,7 +57,7 @@ int	ft_strlen(char	*s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		s1m;
 	int		s2m;

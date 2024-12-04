@@ -6,7 +6,7 @@
 /*   By: moo <moo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:50:12 by moo               #+#    #+#             */
-/*   Updated: 2024/12/04 21:30:16 by moo              ###   ########.fr       */
+/*   Updated: 2024/12/04 21:47:48 by moo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*ft_fill_ex(char *all, char *line, char *excess)
 
 	i = ft_strlen(line);
 	j = 0;
+	excess = malloc(ft_strlen(all) - ft_strlen(line) + 1);
 	while (all[i])
 	{
 		excess[j++] = all[i++];
@@ -34,6 +35,8 @@ char	*get_next_line(int fd)
 	static char	*excess;
 	int			endcheck;
 
+	all = malloc(BUFFER_SIZE + 1);
+	all[0] = '\0';
 	while (1)
 	{
 		endcheck = read (fd, all, BUFFER_SIZE);
