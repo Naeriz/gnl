@@ -6,13 +6,13 @@
 /*   By: moo <moo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:50:09 by moo               #+#    #+#             */
-/*   Updated: 2024/12/06 15:29:00 by moo              ###   ########.fr       */
+/*   Updated: 2024/12/06 16:14:56 by moo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(char *s, char c)
+int	ft_strchr(char *s, char c)
 {
 	int	i;
 
@@ -20,10 +20,10 @@ char	*ft_strchr(char *s, char c)
 	while (s[i] != c)
 	{
 		if (s[i] == '\0')
-			return (NULL);
+			return (0);
 		i++;
 	}
-	return (&((char *)s)[i]);
+	return (1);
 }
 
 char	*ft_cpystr(char *s1)
@@ -32,13 +32,20 @@ char	*ft_cpystr(char *s1)
 	int		i;
 
 	i = 0;
-	while (s1[i] && s1[i - 1] != '\n')
+	if (!s1[i])
+		return (NULL);
+	while (s1[i] && s1[i] != '\n')
 	{
 		i++;
 	}
-	s2 = malloc(i + 1);
+	s2 = malloc(i + 2);
 	i = 0;
-	while (s1[i] && s1[i - 1] != '\n')
+	while (s1[i] && s1[i] != '\n')
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	if (s1[i] == '\n')
 	{
 		s2[i] = s1[i];
 		i++;

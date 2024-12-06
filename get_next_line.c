@@ -6,21 +6,29 @@
 /*   By: moo <moo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:50:12 by moo               #+#    #+#             */
-/*   Updated: 2024/12/06 15:37:01 by moo              ###   ########.fr       */
+/*   Updated: 2024/12/06 16:13:27 by moo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_fill_ex(char *line, char *excess)
+char	*ft_fill_ex(char *excess)
 {
 	char	*next_line;
 	int		i;
 	int		j;
 
-	i = ft_strlen(line);
+	i = 0;
 	j = 0;
-	next_line = malloc(ft_strlen(excess) - ft_strlen(line) + 1);
+	while (excess[i] != '\n' && excess[i])
+		i++;
+	if (!excess[i])
+	{
+		free(excess);
+		return (NULL);
+	}
+	next_line = malloc(ft_strlen(excess) - i + 1);
+	i++;
 	while (excess[i])
 	{
 		next_line[j++] = excess[i++];
@@ -51,8 +59,8 @@ char	*ft_readline(int fd, char *excess)
 		excess = malloc(1);
 		excess[0] = '\0';
 	}
-	while (endcheck != 0 && ft_strchr(all, '\n')
-	!= 1 && ft_strchr(excess, '\n') != 1)
+	endcheck = 1;
+	while (endcheck != 0 && ft_strchr(all, '\n') != 1 && ft_strchr(excess, '\n') != 1)
 	{
 		endcheck = read (fd, all, BUFFER_SIZE);
 		if (endcheck < 0)
@@ -72,10 +80,32 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*excess;
 
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
+		return (NULL);
 	excess = ft_readline(fd, excess);
 	if (!excess)
 		return (NULL);
 	line = ft_cpystr(excess);
-	excess = ft_fill_ex(line, excess);
+	excess = ft_fill_ex(excess);
 	return (line);
 }
+
+
+// #include <fcntl.h>
+// int main()
+// {
+// 	int fd;
+// 	char *line;
+
+// 	fd = open("test.txt", O_RDONLY);
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		printf("%s\n", line);
+// 		free(line);
+// 		line = get_next_line(fd);
+// 	}
+// 	free(line);
+// 	close(fd);
+// 	return (0);
+// }
