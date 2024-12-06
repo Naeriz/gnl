@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moo <moo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 17:50:12 by moo               #+#    #+#             */
-/*   Updated: 2024/12/06 18:29:38 by moo              ###   ########.fr       */
+/*   Created: 2024/12/06 18:19:46 by moo               #+#    #+#             */
+/*   Updated: 2024/12/06 18:23:48 by moo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_fill_ex(char *excess)
 {
@@ -79,20 +79,19 @@ char	*ft_readline(int fd, char *excess)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*excess;
+	static char	*excess[256];
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 		return (NULL);
-	excess = ft_readline(fd, excess);
-	if (!excess)
+	excess[fd] = ft_readline(fd, excess[fd]);
+	if (!excess[fd])
 		return (NULL);
-	line = ft_cpystr(excess);
-	excess = ft_fill_ex(excess);
+	line = ft_cpystr(excess[fd]);
+	excess[fd] = ft_fill_ex(excess[fd]);
 	return (line);
 }
 
 // #include <fcntl.h>
-// #include <stdio.h>
 // int main()
 // {
 // 	int fd;
